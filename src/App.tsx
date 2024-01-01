@@ -1,6 +1,6 @@
 import { Dimensions, SafeAreaView, Text, Touchable, TouchableOpacity, View } from "react-native"
 import ShiftCypher from "./tabs/ShiftCypher"
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import Mode from "./panels/Mode"
 import Affine from "./tabs/Affine"
 import Vigenere from "./tabs/Vigenere"
@@ -9,10 +9,20 @@ import Hill from "./tabs/Hill"
 import Inverse from "./tabs/Inverse"
 import { isGenerator, euler, getMultiplicativeGroup, getGenerators } from "./functions/Functions"
 import Generator from "./tabs/Generator"
+import Exponentiation from "./tabs/Exponentiation"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
   const [mode, setMode] = useState({ label: 'Mã dịch vòng', value: 'shiftCypher' })
+
+  useEffect(() => {
+    setResult([
+      {
+        "label": "Kết quả",
+        "value": "0"
+      }
+    ])
+  }, [mode])
 
   const [result, setResult] = useState([
     {
@@ -84,6 +94,13 @@ const App = () => {
         }
         {mode.value == 'generator' &&
           <Generator
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'exponentiation' &&
+          <Exponentiation
             onResult={(result) => {
               setResult(result)
             }}

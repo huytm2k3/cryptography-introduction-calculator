@@ -36,6 +36,26 @@ const Mode = (props: IMode) => {
             label: 'Phần tử sinh',
             value: 'generator'
         },
+        {
+            label: 'Tìm căn bậc 2',
+            value: 'generator'
+        },
+        {
+            label: 'Logarithm rời rạc',
+            value: 'generator'
+        },
+        {
+            label: 'Nhân bình phương có lặp',
+            value: 'exponentiation'
+        },
+        {
+            label: 'Hệ mật RSA',
+            value: 'rsa'
+        },
+        {
+            label: 'Hệ mật Rabin',
+            value: 'rabin'
+        },
     ]
 
     return (
