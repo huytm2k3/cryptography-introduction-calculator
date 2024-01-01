@@ -2,38 +2,15 @@ import { Text, TouchableOpacity, View } from "react-native"
 import FormLine from "../common/FormLine"
 import { useState } from "react"
 import { Color } from "../values/Color"
+import { shiftCypherDecode, shiftCypherEncode } from "../functions/Functions"
 
 interface ShiftCypherProps {
     onResult: (result: any) => void
 }
 
-export const shiftCypherEncode = (text: string, key: number) => {
-    const result = text.split('').map((char) => {
-        const charCode = char.charCodeAt(0)
-        if (charCode >= 65 && charCode <= 90) {
-            return String.fromCharCode((charCode - 65 + key) % 26 + 65)
-        } else if (charCode >= 97 && charCode <= 122) {
-            return String.fromCharCode((charCode - 97 + key) % 26 + 97)
-        } else {
-            return char
-        }
-    }).join('')
-    return result;
-}
 
-export const shiftCypherDecode = (text: string, key: number) => {
-    const result = text.split('').map((char) => {
-        const charCode = char.charCodeAt(0)
-        if (charCode >= 65 && charCode <= 90) {
-            return String.fromCharCode((charCode - 65 - key + 26) % 26 + 65)
-        } else if (charCode >= 97 && charCode <= 122) {
-            return String.fromCharCode((charCode - 97 - key + 26) % 26 + 97)
-        } else {
-            return char
-        }
-    }).join('')
-    return result;
-}
+
+
 
 const ShiftCypher = (props: ShiftCypherProps) => {
     const [plainText, setPlainText] = useState('')
