@@ -25,6 +25,23 @@ export const inverse = (number: number, n: number) => {
     return x;
 }
 
+export const detA = (a: number[][]) => {
+    return a[0][0] * a[1][1] - a[0][1] * a[1][0]
+}
+
+export const inversedMatrix = (a: number[][]) => {
+    const det = 1;
+    // console.log(detA(a));
+    
+    
+    const result = [[0, 0], [0, 0]]
+    result[0][0] = a[1][1] / det;
+    result[0][1] = -a[0][1] / det;
+    result[1][0] = -a[1][0] / det;
+    result[1][1] = a[0][0] / det;
+    return result;
+}
+
 export const shiftCypherEncode = (text: string, key: number) => {
     const result = text.split('').map((char) => {
         const charCode = char.charCodeAt(0)
@@ -145,7 +162,6 @@ export const runningKeyEncode = (text: string, key: string) => {
             return char
         }
     }).join('')
-    console.log(result);
     
     return result;
 }
@@ -185,4 +201,51 @@ export const runningKeyDecode = (text: string, key: string) => {
 
     initialKey = ''
     return result;
+}
+
+export const hillEncode = (text: string, key: number[][]) => {
+    text = text.toUpperCase();
+    let isOdd = false;
+    
+    if (text.length % 2 !== 0) {
+        text += 'x'
+        isOdd = true;
+    }
+
+    for (let i = 0; i < text.length; i += 2) {
+        const char1 = text.charCodeAt(i) - 65;
+        const char2 = text.charCodeAt(i + 1) - 65;
+        
+        const char1Code = (key[0][0] * char1 + key[1][0] * char2) % 26;
+        const char2Code = (key[0][1] * char1 + key[1][1] * char2) % 26;
+        text = text.slice(0, i) + String.fromCharCode(char1Code + 65) + String.fromCharCode(char2Code + 65) + text.slice(i + 2)
+    }
+
+    if (isOdd) {
+        text = text.slice(0, text.length - 1)
+    }
+
+    return text;
+}
+
+export const hillDecode = (text: string, key: number[][]) => {
+    text = text.toUpperCase();
+
+    for (let i = 0; i < text.length; i += 2) {
+        const char1 = text.charCodeAt(i) - 65;
+        const char2 = text.charCodeAt(i + 1) - 65;
+        
+        
+        const result1 = inversedMatrix(key)[0][0] * char1 + inversedMatrix(key)[1][0] * char2;
+        const result2 = inversedMatrix(key)[0][1] * char1 + inversedMatrix(key)[1][1] * char2;
+        
+        const char1Code = result1 < 0 ? (26 - (-result1 % 26)) % 26 : result1 % 26;
+        const char2Code = result2 < 0 ? (26 - (-result2 % 26)) % 26 : result2 % 26;
+        
+        text = text.slice(0, i) + String.fromCharCode(char1Code + 65) + String.fromCharCode(char2Code + 65) + text.slice(i + 2)
+    }
+
+    console.log(text);
+    
+    return text;
 }

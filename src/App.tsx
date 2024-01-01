@@ -5,6 +5,7 @@ import Mode from "./panels/Mode"
 import Affine from "./tabs/Affine"
 import Vigenere from "./tabs/Vigenere"
 import RunningKey from "./tabs/RunningKey"
+import Hill from "./tabs/Hill"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -59,6 +60,13 @@ const App = () => {
         }
         {mode.value == 'running' &&
           <RunningKey
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'hill' &&
+          <Hill
             onResult={(result) => {
               setResult(result)
             }}
