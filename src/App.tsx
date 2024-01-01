@@ -7,6 +7,8 @@ import Vigenere from "./tabs/Vigenere"
 import RunningKey from "./tabs/RunningKey"
 import Hill from "./tabs/Hill"
 import Inverse from "./tabs/Inverse"
+import { isGenerator, euler, getMultiplicativeGroup, getGenerators } from "./functions/Functions"
+import Generator from "./tabs/Generator"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -75,6 +77,13 @@ const App = () => {
         }
         {mode.value == 'inverse' &&
           <Inverse
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'generator' &&
+          <Generator
             onResult={(result) => {
               setResult(result)
             }}

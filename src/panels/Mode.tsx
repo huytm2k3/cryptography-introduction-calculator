@@ -32,6 +32,10 @@ const Mode = (props: IMode) => {
             label: 'Tính nghịch đảo',
             value: 'inverse'
         },
+        {
+            label: 'Phần tử sinh',
+            value: 'generator'
+        },
     ]
 
     return (
