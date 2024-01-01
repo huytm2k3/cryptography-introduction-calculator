@@ -17,8 +17,8 @@ const Mode = (props: IMode) => {
             value: 'affine'
         },
         {
-            label: 'Mã Vingenere',
-            value: 'vingenere'
+            label: 'Mã Vigenere',
+            value: 'vigenere'
         },
         {
             label: 'Hệ mật khoá chạy',

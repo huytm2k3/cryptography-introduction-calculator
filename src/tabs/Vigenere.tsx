@@ -2,20 +2,18 @@ import { Text, TouchableOpacity, View } from "react-native"
 import FormLine from "../common/FormLine"
 import { useState } from "react"
 import { Color } from "../values/Color"
-import { affineDecode, affineEncode, inverse } from "../functions/Functions"
+import { vigenereDecode, vigenereEncode } from "../functions/Functions"
 
-interface AffineProps {
+interface VigenereProps {
     onResult: (result: any) => void
 }
 
-const Affine = (props: AffineProps) => {
+const Vigenere = (props: VigenereProps) => {
     const [plainText, setPlainText] = useState('')
-    const [keyA, setKeyA] = useState('')
-    const [keyB, setKeyB] = useState('')
+    const [key, setKey] = useState('')
 
     const [cipherText, setCipherText] = useState('')
-    const [decodeKeyA, setDecodeKeyA] = useState('')
-    const [decodeKeyB, setDecodeKeyB] = useState('')
+    const [decodeKey, setDecodeKey] = useState('')
 
     const [mode, setMode] = useState<'encode' | 'decode'>('encode')
 
@@ -33,17 +31,9 @@ const Affine = (props: AffineProps) => {
                             }}
                         />
                         <FormLine
-                            label="Khoá A"
-                            value={keyA}
-                            onChangeText={setKeyA}
-                            style={{
-                                marginBottom: 8
-                            }}
-                        />
-                        <FormLine
-                            label="Khoá B"
-                            value={keyB}
-                            onChangeText={setKeyB}
+                            label="Khoá"
+                            value={key}
+                            onChangeText={setKey}
                         />
                     </View>
                     <View style={{ flexDirection: 'row' }}>
@@ -53,19 +43,15 @@ const Affine = (props: AffineProps) => {
                             <Text style={{ width: '100%', textAlign: 'center', color: Color.primary }}>Giải mã</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ flex: 1, padding: 8, backgroundColor: Color.primary }} onPress={() => {
-                            const result = affineEncode(plainText, Number(keyA), Number(keyB))
+                            const result = vigenereEncode(plainText, key)
                             props.onResult([
                                 {
                                     label: 'Bản rõ',
                                     value: plainText
                                 },
                                 {
-                                    label: 'Khoá A',
-                                    value: keyA
-                                },
-                                {
-                                    label: 'Khoá B',
-                                    value: keyB
+                                    label: 'Khoá',
+                                    value: key
                                 },
                                 {
                                     label: 'Bản mã',
@@ -91,39 +77,27 @@ const Affine = (props: AffineProps) => {
                             }}
                         />
                         <FormLine
-                            label="Khoá A"
-                            value={decodeKeyA}
-                            onChangeText={setDecodeKeyA}
-                            style={{
-                                marginBottom: 8
-                            }}
-                        />
-                        <FormLine
-                            label="Khoá B"
-                            value={decodeKeyB}
-                            onChangeText={setDecodeKeyB}
+                            label="Khoá"
+                            value={decodeKey}
+                            onChangeText={setDecodeKey}
                         />
                     </View>
                     <View style={{ flexDirection: 'row' }}>
-                        <TouchableOpacity style={{ flex: 1, padding: 8 }} onPress={() => {
+                        <TouchableOpacity style={{ flex: 1, padding: 8 }} onPress={() => { 
                             setMode('encode')
                         }}>
                             <Text style={{ width: '100%', textAlign: 'center', color: Color.primary }}>Mã hoá</Text>
                         </TouchableOpacity>
                         <TouchableOpacity style={{ flex: 1, padding: 8, backgroundColor: Color.primary }} onPress={() => {
-                            const result = affineDecode(cipherText, Number(decodeKeyA), Number(decodeKeyB))
+                            const result = vigenereDecode(cipherText, decodeKey)
                             props.onResult([
                                 {
                                     label: 'Bản mã',
                                     value: cipherText
                                 },
                                 {
-                                    label: 'Khoá A',
-                                    value: decodeKeyA
-                                },
-                                {
-                                    label: 'Khoá B',
-                                    value: decodeKeyB
+                                    label: 'Khoá',
+                                    value: decodeKey
                                 },
                                 {
                                     label: 'Bản rõ',
@@ -140,4 +114,4 @@ const Affine = (props: AffineProps) => {
     )
 }
 
-export default Affine
+export default Vigenere

@@ -22,7 +22,7 @@ export const inverse = (number: number, n: number) => {
     if (x < 0) {
         x = (x + n) % n;
     }
-    return x; 
+    return x;
 }
 
 export const shiftCypherEncode = (text: string, key: number) => {
@@ -83,6 +83,45 @@ export const affineDecode = (text: string, a: number, b: number) => {
                 return String.fromCharCode((inverse(a, 26) * (charCode - 97 - b + 26)) % 26 + 97)
             } else
                 return String.fromCharCode((inverse(a, 26) * (charCode - 97 - b)) % 26 + 97)
+        } else {
+            return char
+        }
+    }).join('')
+    return result;
+}
+
+export const vigenereEncode = (text: string, key: string) => {
+    const result = text.split('').map((char, index) => {
+        const charCode = char.charCodeAt(0)
+        const keyCode = key.charCodeAt(index % key.length)
+        if (charCode >= 65 && charCode <= 90) {
+            return String.fromCharCode((charCode - 65 + keyCode - 65) % 26 + 65)
+        } else if (charCode >= 97 && charCode <= 122) {
+            return String.fromCharCode((charCode - 97 + keyCode - 97) % 26 + 97)
+        } else {
+            return char
+        }
+    }).join('')
+    return result;
+}
+
+export const vigenereDecode = (text: string, key: string) => {
+    const result = text.split('').map((char, index) => {
+        const charCode = char.charCodeAt(0)
+        const keyCode = key.charCodeAt(index % key.length)
+
+        console.log(charCode - keyCode);
+        
+        if (charCode >= 65 && charCode <= 90) {
+            if (charCode - keyCode < 0) {
+                return String.fromCharCode((charCode - keyCode + 26) % 26 + 65)
+            } else
+                return String.fromCharCode((charCode - keyCode) % 26 + 65)
+        } else if (charCode >= 97 && charCode <= 122) {
+            if (charCode - keyCode < 0) {
+                return String.fromCharCode((charCode - keyCode + 26) % 26 + 97)
+            } else
+                return String.fromCharCode((charCode - keyCode) % 26 + 97)
         } else {
             return char
         }

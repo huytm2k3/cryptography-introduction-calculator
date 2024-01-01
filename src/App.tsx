@@ -3,6 +3,7 @@ import ShiftCypher from "./tabs/ShiftCypher"
 import { useState } from "react"
 import Mode from "./panels/Mode"
 import Affine from "./tabs/Affine"
+import Vigenere from "./tabs/Vigenere"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -43,6 +44,13 @@ const App = () => {
         }
         {mode.value == 'affine' &&
           <Affine
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'vigenere' &&
+          <Vigenere
             onResult={(result) => {
               setResult(result)
             }}
