@@ -31,8 +31,6 @@ export const detA = (a: number[][]) => {
 
 export const inversedMatrix = (a: number[][]) => {
     const det = 1;
-    // console.log(detA(a));
-    
     
     const result = [[0, 0], [0, 0]]
     result[0][0] = a[1][1] / det;
@@ -230,6 +228,7 @@ export const hillEncode = (text: string, key: number[][]) => {
 
 export const hillDecode = (text: string, key: number[][]) => {
     text = text.toUpperCase();
+    
 
     for (let i = 0; i < text.length; i += 2) {
         const char1 = text.charCodeAt(i) - 65;
@@ -244,8 +243,6 @@ export const hillDecode = (text: string, key: number[][]) => {
         
         text = text.slice(0, i) + String.fromCharCode(char1Code + 65) + String.fromCharCode(char2Code + 65) + text.slice(i + 2)
     }
-
-    console.log(text);
     
     return text;
 }

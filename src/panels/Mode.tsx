@@ -27,7 +27,11 @@ const Mode = (props: IMode) => {
         {
             label: 'Hệ mật Hill',
             value: 'hill'
-        }
+        },
+        {
+            label: 'Tính nghịch đảo',
+            value: 'inverse'
+        },
     ]
 
     return (

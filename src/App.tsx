@@ -6,6 +6,7 @@ import Affine from "./tabs/Affine"
 import Vigenere from "./tabs/Vigenere"
 import RunningKey from "./tabs/RunningKey"
 import Hill from "./tabs/Hill"
+import Inverse from "./tabs/Inverse"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -67,6 +68,13 @@ const App = () => {
         }
         {mode.value == 'hill' &&
           <Hill
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'inverse' &&
+          <Inverse
             onResult={(result) => {
               setResult(result)
             }}
