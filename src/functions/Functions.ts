@@ -128,3 +128,61 @@ export const vigenereDecode = (text: string, key: string) => {
     }).join('')
     return result;
 }
+
+export const runningKeyEncode = (text: string, key: string) => {
+    if (key.length < text.length) {
+        key += text.slice(0, text.length - key.length)
+    }
+    
+    const result = text.split('').map((char, index) => {
+        const charCode = char.charCodeAt(0)
+        const keyCode = key.charCodeAt(index)
+        if (charCode >= 65 && charCode <= 90) {
+            return String.fromCharCode((charCode - 65 + keyCode - 65) % 26 + 65)
+        } else if (charCode >= 97 && charCode <= 122) {
+            return String.fromCharCode((charCode - 97 + keyCode - 97) % 26 + 97)
+        } else {
+            return char
+        }
+    }).join('')
+    console.log(result);
+    
+    return result;
+}
+
+let initialKey = ''
+export const runningKeyDecode = (text: string, key: string) => {
+    if (initialKey === '') {
+        initialKey = key
+    }
+    let result = text.split('').map((char, index) => {
+        const charCode = char.charCodeAt(0)
+        const keyCode = key.charCodeAt(index)
+
+        if (index >= key.length) {
+            return ''
+        }
+
+        if (charCode >= 65 && charCode <= 90) {
+            if (charCode - keyCode < 0) {
+                return String.fromCharCode((charCode - keyCode + 26) % 26 + 65)
+            } else
+                return String.fromCharCode((charCode - keyCode) % 26 + 65)
+        } else if (charCode >= 97 && charCode <= 122) {
+            if (charCode - keyCode < 0) {
+                return String.fromCharCode((charCode - keyCode + 26) % 26 + 97)
+            } else
+                return String.fromCharCode((charCode - keyCode) % 26 + 97)
+        } else {
+            return char
+        }
+    }).join('')
+    
+
+    if (result.length < text.length) {
+        result = runningKeyDecode(text, initialKey + result)
+    }
+
+    initialKey = ''
+    return result;
+}

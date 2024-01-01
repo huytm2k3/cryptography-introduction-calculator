@@ -4,6 +4,7 @@ import { useState } from "react"
 import Mode from "./panels/Mode"
 import Affine from "./tabs/Affine"
 import Vigenere from "./tabs/Vigenere"
+import RunningKey from "./tabs/RunningKey"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -51,6 +52,13 @@ const App = () => {
         }
         {mode.value == 'vigenere' &&
           <Vigenere
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'running' &&
+          <RunningKey
             onResult={(result) => {
               setResult(result)
             }}
