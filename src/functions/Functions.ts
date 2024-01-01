@@ -345,3 +345,16 @@ export const exponentiationBySquaring = (a: number, b: number, n: number) => {
     return result;
 }
 
+export const RSAEncode = (plain: number, p: number, q: number, e: number) => {
+    const n = p * q;
+
+    const result = exponentiationBySquaring(plain, e, n)
+    return result;
+}
+
+export const RSADecode = (cipher: number, p: number, q: number, d: number) => {
+    const n = p * q;
+
+    const result = exponentiationBySquaring(cipher, d, n)
+    return result;
+}

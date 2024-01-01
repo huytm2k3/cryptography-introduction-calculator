@@ -7,9 +7,10 @@ import Vigenere from "./tabs/Vigenere"
 import RunningKey from "./tabs/RunningKey"
 import Hill from "./tabs/Hill"
 import Inverse from "./tabs/Inverse"
-import { isGenerator, euler, getMultiplicativeGroup, getGenerators } from "./functions/Functions"
+import { isGenerator, euler, getMultiplicativeGroup, getGenerators, inverse } from "./functions/Functions"
 import Generator from "./tabs/Generator"
 import Exponentiation from "./tabs/Exponentiation"
+import RSA from "./tabs/RSA"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -30,6 +31,7 @@ const App = () => {
       "value": "0"
     }
   ])
+
 
   return (
     <SafeAreaView style={{ flexDirection: 'column', flex: 1 }}>
@@ -101,6 +103,13 @@ const App = () => {
         }
         {mode.value == 'exponentiation' &&
           <Exponentiation
+            onResult={(result) => {
+              setResult(result)
+            }}
+          />
+        }
+        {mode.value == 'rsa' &&
+          <RSA
             onResult={(result) => {
               setResult(result)
             }}
