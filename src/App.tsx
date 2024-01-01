@@ -11,6 +11,7 @@ import { isGenerator, euler, getMultiplicativeGroup, getGenerators, inverse } fr
 import Generator from "./tabs/Generator"
 import Exponentiation from "./tabs/Exponentiation"
 import RSA from "./tabs/RSA"
+import { SafeAreaProvider } from "react-native-safe-area-context"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -34,99 +35,101 @@ const App = () => {
 
 
   return (
-    <SafeAreaView style={{ flexDirection: 'column', flex: 1 }}>
-      <View style={{ flexDirection: 'row', padding: 16 }}>
-        <Text style={{ flex: 1 }}>{mode.label}</Text>
-        <TouchableOpacity onPress={() => { setModeVisible(true) }}>
-          <Text>Chuyển</Text>
-        </TouchableOpacity>
-      </View>
+    <SafeAreaProvider>
+      <SafeAreaView style={{ flexDirection: 'column', flex: 1 }}>
+        <View style={{ flexDirection: 'row', padding: 16 }}>
+          <Text style={{ flex: 1 }}>{mode.label}</Text>
+          <TouchableOpacity onPress={() => { setModeVisible(true) }}>
+            <Text>Chuyển</Text>
+          </TouchableOpacity>
+        </View>
 
-      <View style={{ height: Dimensions.get('window').height / 2 }}>
-        {result.map((item, index) => (
-          <View key={index} style={{ flexDirection: 'row', padding: 16 }}>
-            <Text style={{ fontStyle: 'italic', width: 100 }}>{item.label}</Text>
-            <Text style={{ fontWeight: 'bold', flex: 1 }}>{item.value}</Text>
-          </View>
-        ))}
-      </View>
+        <View style={{ height: Dimensions.get('window').height / 2 }}>
+          {result.map((item, index) => (
+            <View key={index} style={{ flexDirection: 'row', padding: 16 }}>
+              <Text style={{ fontStyle: 'italic', width: 100 }}>{item.label}</Text>
+              <Text style={{ fontWeight: 'bold', flex: 1 }}>{item.value}</Text>
+            </View>
+          ))}
+        </View>
 
-      <View style={{ flex: 1, padding: 16 }}>
-        {mode.value == 'shiftCypher' &&
-          <ShiftCypher
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'affine' &&
-          <Affine
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'vigenere' &&
-          <Vigenere
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'running' &&
-          <RunningKey
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'hill' &&
-          <Hill
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'inverse' &&
-          <Inverse
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'generator' &&
-          <Generator
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'exponentiation' &&
-          <Exponentiation
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-        {mode.value == 'rsa' &&
-          <RSA
-            onResult={(result) => {
-              setResult(result)
-            }}
-          />
-        }
-      </View>
+        <View style={{ flex: 1, padding: 16 }}>
+          {mode.value == 'shiftCypher' &&
+            <ShiftCypher
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'affine' &&
+            <Affine
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'vigenere' &&
+            <Vigenere
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'running' &&
+            <RunningKey
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'hill' &&
+            <Hill
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'inverse' &&
+            <Inverse
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'generator' &&
+            <Generator
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'exponentiation' &&
+            <Exponentiation
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'rsa' &&
+            <RSA
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+        </View>
 
-      {modeVisible &&
-        <Mode
-          visible={modeVisible}
-          onSelect={(mode) => { setMode(mode) }}
-          onClose={() => {
-            setModeVisible(false)
-          }}
-        />
-      }
-    </SafeAreaView>
+        {modeVisible &&
+          <Mode
+            visible={modeVisible}
+            onSelect={(mode) => { setMode(mode) }}
+            onClose={() => {
+              setModeVisible(false)
+            }}
+          />
+        }
+      </SafeAreaView>
+    </SafeAreaProvider>
   )
 }
 
