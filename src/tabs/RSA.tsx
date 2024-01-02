@@ -2,7 +2,7 @@ import { Text, TouchableOpacity, View } from "react-native"
 import FormLine from "../common/FormLine"
 import { useState } from "react"
 import { Color } from "../values/Color"
-import { RSADecode, RSAEncode, exponentiationBySquaring, getGenerators, inverse, shiftCypherDecode, shiftCypherEncode } from "../functions/Functions"
+import { RSADecode, RSAEncode, exponentiationBySquaring, gcd, getGenerators, inverse, shiftCypherDecode, shiftCypherEncode } from "../functions/Functions"
 
 interface RSAProps {
     onResult: (result: any) => void
@@ -65,11 +65,17 @@ const RSA = (props: RSAProps) => {
 
                         <TouchableOpacity style={{ flex: 1, padding: 8, backgroundColor: Color.primary }} onPress={() => {
                             const result = RSAEncode(Number(plainText), Number(numP), Number(numQ), Number(numE))
+                            const d = inverse(Number(numE), (Number(numP) - 1) * (Number(numQ) - 1))
+                            const numOfStun = (1 + gcd(Number(numE) - 1, Number(numP) - 1)) * (1 + gcd(d - 1, Number(numQ) - 1))
 
                             props.onResult([
                                 {
                                     label: 'Mũ giải mã d',
-                                    value: inverse(Number(numE), (Number(numP) - 1) * (Number(numQ) - 1))
+                                    value: d
+                                },
+                                {
+                                    label: 'Số điểm bất động',
+                                    value: numOfStun
                                 },
                                 {
                                     label: 'Kết quả',
@@ -125,11 +131,17 @@ const RSA = (props: RSAProps) => {
 
                         <TouchableOpacity style={{ flex: 1, padding: 8, backgroundColor: Color.primary }} onPress={() => {
                             const result = RSADecode(Number(cipherText), Number(numP), Number(numQ), Number(numD))
+                            const e = inverse(Number(numD), (Number(numP) - 1) * (Number(numQ) - 1))
+                            const numOfStun = (1 + gcd(e - 1, Number(numP) - 1)) * (1 + gcd(Number(numD) - 1, Number(numQ) - 1))
 
                             props.onResult([
                                 {
                                     label: 'Mũ mã hoá e',
-                                    value: inverse(Number(numD), (Number(numP) - 1) * (Number(numQ) - 1))
+                                    value: e
+                                },
+                                {
+                                    label: 'Số điểm bất động',
+                                    value: numOfStun
                                 },
                                 {
                                     label: 'Kết quả',

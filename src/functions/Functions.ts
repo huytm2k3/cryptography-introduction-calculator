@@ -25,6 +25,13 @@ export const inverse = (number: number, n: number) => {
     return x;
 }
 
+export const gcd: (a: number, b: number) => number = (a: number, b: number) => {
+    if (b === 0) {
+        return a;
+    }
+    return gcd(b, a % b);
+}
+
 export const detA = (a: number[][]) => {
     return a[0][0] * a[1][1] - a[0][1] * a[1][0]
 }
