@@ -37,13 +37,13 @@ export const detA = (a: number[][]) => {
 }
 
 export const inversedMatrix = (a: number[][]) => {
-    const det = 1;
+    const det = detA(a);
 
     const result = [[0, 0], [0, 0]]
-    result[0][0] = a[1][1] / det;
-    result[0][1] = -a[0][1] / det;
-    result[1][0] = -a[1][0] / det;
-    result[1][1] = a[0][0] / det;
+    result[0][0] = inverse(det, 26) * a[1][1];
+    result[0][1] = inverse(det, 26) * -a[0][1];
+    result[1][0] = inverse(det, 26) * -a[1][0];
+    result[1][1] = inverse(det, 26) * a[0][0];
     return result;
 }
 
