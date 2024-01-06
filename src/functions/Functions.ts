@@ -62,6 +62,48 @@ export const inversedMatrix = (a: number[][]) => {
     return result;
 }
 
+export const decToBin = (dec: number) => {
+    let result = ''
+    while (dec > 0) {
+        result = (dec % 2) + result
+        dec = Math.floor(dec / 2)
+    }
+    return result;
+}
+
+export const binToDec = (bin: string) => {
+    let result = 0
+    for (let i = 0; i < bin.length; i++) {
+        result += parseInt(bin[i]) * Math.pow(2, bin.length - i - 1)
+    }
+    return result;
+}
+
+export const hexToBin = (hex: string) => {
+    let result = ''
+    for (let i = 0; i < hex.length; i++) {
+        result += decToBin(parseInt(hex[i], 16))
+    }
+    return result;
+}
+
+export const binToHex = (bin: string) => {
+    let result = ''
+    for (let i = 0; i < bin.length; i += 4) {
+        result += parseInt(bin.slice(i, i + 4), 2).toString(16)
+    }
+    return result;
+}
+
+export const levelOfElement = (element: number, n: number) => {
+    let result = 0
+    while (element !== 1) {
+        element = (element * element) % n
+        result++
+    }
+    return result;
+}
+
 export const shiftCypherEncode = (text: string, key: number) => {
     const result = text.split('').map((char) => {
         const charCode = char.charCodeAt(0)
@@ -392,38 +434,5 @@ export const RabinDecode = (cipher: number, p: number, q: number) => {
     const n = p * q;
 
     const result = squareRoot2OfModulo(cipher, n)
-    return result;
-}
-
-export const decToBin = (dec: number) => {
-    let result = ''
-    while (dec > 0) {
-        result = (dec % 2) + result
-        dec = Math.floor(dec / 2)
-    }
-    return result;
-}
-
-export const binToDec = (bin: string) => {
-    let result = 0
-    for (let i = 0; i < bin.length; i++) {
-        result += parseInt(bin[i]) * Math.pow(2, bin.length - i - 1)
-    }
-    return result;
-}
-
-export const hexToBin = (hex: string) => {
-    let result = ''
-    for (let i = 0; i < hex.length; i++) {
-        result += decToBin(parseInt(hex[i], 16))
-    }
-    return result;
-}
-
-export const binToHex = (bin: string) => {
-    let result = ''
-    for (let i = 0; i < bin.length; i += 4) {
-        result += parseInt(bin.slice(i, i + 4), 2).toString(16)
-    }
     return result;
 }

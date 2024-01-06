@@ -50,6 +50,10 @@ const Mode = (props: IMode) => {
             label: 'Hệ mật Rabin',
             value: 'rabin'
         },
+        {
+            label: 'Cấp của phần tử',
+            value: 'levelOfElement'
+        },
     ]
 
     return (
