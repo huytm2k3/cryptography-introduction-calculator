@@ -51,6 +51,10 @@ const Mode = (props: IMode) => {
             value: 'rabin'
         },
         {
+            label: 'Hệ mật Elgamal',
+            value: 'elgamal'
+        },
+        {
             label: 'Cấp của phần tử',
             value: 'levelOfElement'
         },

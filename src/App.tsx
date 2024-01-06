@@ -14,6 +14,7 @@ import RSA from "./tabs/RSA"
 import { SafeAreaProvider } from "react-native-safe-area-context"
 import Rabin from "./tabs/Rabin"
 import LevelOfElement from "./tabs/LevelOfElement"
+import Elgamal from "./tabs/Elgaman"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -121,6 +122,13 @@ const App = () => {
           }
           {mode.value == 'rabin' &&
             <Rabin
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'elgamal' &&
+            <Elgamal
               onResult={(result) => {
                 setResult(result)
               }}

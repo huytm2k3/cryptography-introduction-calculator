@@ -104,6 +104,19 @@ export const levelOfElement = (element: number, n: number) => {
     return result;
 }
 
+export const ord = (n: number) => {
+    let arr = getMultiplicativeGroup(n)
+    let result = 1
+    for (let i = 0; i < arr.length; i++) {
+        if (levelOfElement(arr[i], n) > result) {
+            result = arr[i]
+            break;
+        }
+    }
+
+    return result;
+}
+
 export const shiftCypherEncode = (text: string, key: number) => {
     const result = text.split('').map((char) => {
         const charCode = char.charCodeAt(0)
@@ -434,5 +447,25 @@ export const RabinDecode = (cipher: number, p: number, q: number) => {
     const n = p * q;
 
     const result = squareRoot2OfModulo(cipher, n)
+    return result;
+}
+
+export const ElgamalEncode = (plain: number, alpha: number, n: number, a: number, k: number) => {
+    let pK = exponentiationBySquaring(alpha, a, n);
+    let y1 = exponentiationBySquaring(alpha, k, n);
+    let y2 = (plain * exponentiationBySquaring(pK, k, n)) % n;
+    let result: any = {}
+    result.cipher = [y1, y2];
+    result.publicKey = pK;
+    return result;
+}
+
+export const ElgamalDecode = (cipher: number[], n: number, a: number, alpha: number) => {
+    const y1 = cipher[0];
+    const y2 = cipher[1];
+    const y1a = exponentiationBySquaring(y1, a, n);
+    const y1aInv = inverse(y1a, n);
+    const result = (y2 * y1aInv) % n;
+
     return result;
 }
