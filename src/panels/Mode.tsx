@@ -46,6 +46,10 @@ const Mode = (props: IMode) => {
             label: 'Hệ mật RSA',
             value: 'rsa'
         },
+        {
+            label: 'Hệ mật Rabin',
+            value: 'rabin'
+        },
     ]
 
     return (

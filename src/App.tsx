@@ -12,6 +12,7 @@ import Generator from "./tabs/Generator"
 import Exponentiation from "./tabs/Exponentiation"
 import RSA from "./tabs/RSA"
 import { SafeAreaProvider } from "react-native-safe-area-context"
+import Rabin from "./tabs/Rabin"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -112,6 +113,13 @@ const App = () => {
           }
           {mode.value == 'rsa' &&
             <RSA
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'rabin' &&
+            <Rabin
               onResult={(result) => {
                 setResult(result)
               }}

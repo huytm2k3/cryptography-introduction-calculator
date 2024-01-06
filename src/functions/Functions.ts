@@ -25,6 +25,21 @@ export const inverse = (number: number, n: number) => {
     return x;
 }
 
+export const squareRoot2OfModulo = (a: number, p: number) => {
+    let result: number[] = [];
+    let arr = getMultiplicativeGroup(p);
+
+    for (let i of arr) {
+        let temp = (i * i) % p;
+        
+        if (temp == a) {
+            result.push(i);
+        }
+    }
+
+    return result;
+}
+
 export const gcd: (a: number, b: number) => number = (a: number, b: number) => {
     if (b === 0) {
         return a;
@@ -363,5 +378,52 @@ export const RSADecode = (cipher: number, p: number, q: number, d: number) => {
     const n = p * q;
 
     const result = exponentiationBySquaring(cipher, d, n)
+    return result;
+}
+
+export const RabinEncode = (plain: number, p: number, q: number) => {
+    const n = p * q;
+
+    const result = exponentiationBySquaring(plain, 2, n)
+    return result;
+}
+
+export const RabinDecode = (cipher: number, p: number, q: number) => {
+    const n = p * q;
+
+    const result = squareRoot2OfModulo(cipher, n)
+    return result;
+}
+
+export const decToBin = (dec: number) => {
+    let result = ''
+    while (dec > 0) {
+        result = (dec % 2) + result
+        dec = Math.floor(dec / 2)
+    }
+    return result;
+}
+
+export const binToDec = (bin: string) => {
+    let result = 0
+    for (let i = 0; i < bin.length; i++) {
+        result += parseInt(bin[i]) * Math.pow(2, bin.length - i - 1)
+    }
+    return result;
+}
+
+export const hexToBin = (hex: string) => {
+    let result = ''
+    for (let i = 0; i < hex.length; i++) {
+        result += decToBin(parseInt(hex[i], 16))
+    }
+    return result;
+}
+
+export const binToHex = (bin: string) => {
+    let result = ''
+    for (let i = 0; i < bin.length; i += 4) {
+        result += parseInt(bin.slice(i, i + 4), 2).toString(16)
+    }
     return result;
 }
