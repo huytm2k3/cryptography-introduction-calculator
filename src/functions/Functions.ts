@@ -31,7 +31,7 @@ export const squareRoot2OfModulo = (a: number, p: number) => {
 
     for (let i of arr) {
         let temp = (i * i) % p;
-        
+
         if (temp == a) {
             result.push(i);
         }
@@ -81,7 +81,7 @@ export const binToDec = (bin: string) => {
 
 export const hexToBin = (hex: string) => {
     let result = ''
-    
+
     for (let i = 0; i < hex.length; i++) {
         result += parseInt(hex[i], 16).toString(2).padStart(4, '0')
     }
@@ -331,13 +331,13 @@ export const getXorArray = () => {
     for (let i = 0; i < 8; i++) {
         let startHalf = x.slice(0, 4)
         let endHalf = x.slice(4)
-        
+
         let re = String(binToDec(startHalf)) + '' + String(binToDec(endHalf))
-        
+
         result.push(Number(re))
         x = x.slice(1) + '0'
     }
-    
+
     return result;
 }
 
@@ -345,7 +345,7 @@ export const getXorSumArray = (number: number) => {
     const xorArray = getXorArray()
     const a = Math.floor(number / 10)
     const b = number % 10
-    
+
     const resultA = []
     const resultB = []
     for (let i = 0; i < xorArray.length; i++) {
@@ -390,17 +390,17 @@ export const xor = (hex1: string, num2: number) => {
 
 export const xtime = (hex: string) => {
     const bin = hexToBin(hex)
-    
+
     let binResult;
     if (bin[0] === '0') {
         binResult = bin.slice(1) + '0'
     } else {
         let temp = hexToBin('1b')
-        
+
         binResult = addBin(bin.slice(1) + '0', temp)
     }
     const hexResult = binToHex(binResult)
-    
+
     return hexResult;
 }
 
@@ -416,17 +416,30 @@ export const addBin = (bin1: string, bin2: string) => {
 }
 
 const mixMatrix = [
-    ['02', '03', '01', '01'],
-    ['01', '02', '03', '01'],
-    ['01', '01', '02', '03'],
-    ['03', '01', '01', '02']
+    [2, 3, 1, 1],
+    [1, 2, 3, 1],
+    [1, 1, 2, 3],
+    [3, 1, 1, 2]
 ]
-export const mixColumns = (state: number[][]) => {
-    const result = [[0, 0, 0, 0], [0, 0, 0, 0]]
-    for (let i = 0; i < 4; i++) {
-        result[0][i] = (state[0][i] * 2) ^ (state[1][i] * 3) ^ (state[2][i]) ^ (state[3][i])
-        result[1][i] = (state[0][i]) ^ (state[1][i] * 2) ^ (state[2][i] * 3) ^ (state[3][i])
+export const mixColumns = (state: string[][]) => {
+    const result = [
+        ['0', '0', '0', '0'],
+        ['0', '0', '0', '0'],
+        ['0', '0', '0', '0'],
+        ['0', '0', '0', '0']
+    ]
+
+    for (let c = 0; c < state[0].length; c++) {
+        for (let i = 0; i < state.length; i++) {
+            let r = '00000000';
+            for (let j = 0; j < mixMatrix[i].length; j++) {
+                r = addBin(r, hexToBin(xor(state[j][c], mixMatrix[i][j])))
+            }
+
+            result[i][c] = binToHex(r)
+        }
     }
+
     return result;
 }
 
@@ -471,17 +484,17 @@ export const isGenerator = (number: number, n: number) => {
     const mgTemporary: any = []
     for (let i = 1; i < n; i++) {
         let temporary = exponentiationBySquaring(number, i, n)
-        
+
         if (!mG.includes(temporary)) {
             console.log(temporary);
-            
+
             return false
         }
         if (!mgTemporary.includes(temporary)) {
             mgTemporary.push(temporary)
         }
     }
-    
+
     if (mgTemporary.length !== mG.length) return false;
     return true;
 }
@@ -503,7 +516,7 @@ export const getGenerators = (n: number) => {
     mG.map((element) => {
         result.push(exponentiationBySquaring(initialGenerator, element, n))
     })
-    
+
     return result;
 }
 
