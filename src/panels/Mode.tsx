@@ -58,6 +58,18 @@ const Mode = (props: IMode) => {
             label: 'Cấp của phần tử',
             value: 'levelOfElement'
         },
+        {
+            label: 'Mix columns',
+            value: 'mixColumns'
+        },
+        {
+            label: 'Xtime',
+            value: 'xtime'
+        },
+        {
+            label: 'Nhân xtime',
+            value: 'xor'
+        },
     ]
 
     return (

@@ -15,6 +15,9 @@ import { SafeAreaProvider } from "react-native-safe-area-context"
 import Rabin from "./tabs/Rabin"
 import LevelOfElement from "./tabs/LevelOfElement"
 import Elgamal from "./tabs/Elgaman"
+import MixColumns from "./tabs/MixColumns"
+import Xtime from "./tabs/Xtime"
+import Xor from "./tabs/Xor"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -136,6 +139,27 @@ const App = () => {
           }
           {mode.value == 'levelOfElement' &&
             <LevelOfElement
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'mixColumns' &&
+            <MixColumns
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'xtime' &&
+            <Xtime
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'xor' &&
+            <Xor
               onResult={(result) => {
                 setResult(result)
               }}

@@ -81,8 +81,9 @@ export const binToDec = (bin: string) => {
 
 export const hexToBin = (hex: string) => {
     let result = ''
+    
     for (let i = 0; i < hex.length; i++) {
-        result += decToBin(parseInt(hex[i], 16))
+        result += parseInt(hex[i], 16).toString(2).padStart(4, '0')
     }
     return result;
 }
@@ -324,6 +325,102 @@ export const hillDecode = (text: string, key: number[][]) => {
     return text;
 }
 
+export const getXorArray = () => {
+    const result = []
+    let x = '00000001'
+    for (let i = 0; i < 8; i++) {
+        let startHalf = x.slice(0, 4)
+        let endHalf = x.slice(4)
+        
+        let re = String(binToDec(startHalf)) + '' + String(binToDec(endHalf))
+        
+        result.push(Number(re))
+        x = x.slice(1) + '0'
+    }
+    
+    return result;
+}
+
+export const getXorSumArray = (number: number) => {
+    const xorArray = getXorArray()
+    const a = Math.floor(number / 10)
+    const b = number % 10
+    
+    const resultA = []
+    const resultB = []
+    for (let i = 0; i < xorArray.length; i++) {
+        if (a & (1 << i)) {
+            resultA.push(Number(xorArray[i]) * 10)
+        }
+    }
+    for (let i = 0; i < xorArray.length; i++) {
+        if (b & (1 << i)) {
+            resultB.push(xorArray[i])
+        }
+    }
+    return [...resultA, ...resultB];
+}
+
+export const xor = (hex1: string, num2: number) => {
+    const xorArray = getXorArray()
+    const xorSumArrayHex2 = getXorSumArray(num2)
+    const preXor = [hex1]
+
+    for (let i = 1; i < xorArray.length; i++) {
+        preXor.push(xtime(preXor[i - 1]))
+    }
+
+    let result = '00000000'
+    let preResult = []
+    let preBinResult = []
+
+    for (let i = 0; i < xorSumArrayHex2.length; i++) {
+        // result = addBin(hexToBin(result), hexToBin(preXor[xorSumArrayHex2[i]]))
+        let index = xorArray.indexOf(xorSumArrayHex2[i])
+        preResult.push(preXor[index])
+        preBinResult.push(hexToBin(preXor[index]))
+    }
+
+    for (let i = 0; i < preBinResult.length; i++) {
+        result = addBin(result, preBinResult[i])
+    }
+
+    return binToHex(result)
+}
+
+export const xtime = (hex: string) => {
+    const bin = hexToBin(hex)
+    
+    let binResult;
+    if (bin[0] === '0') {
+        binResult = bin.slice(1) + '0'
+    } else {
+        let temp = hexToBin('1b')
+        
+        binResult = addBin(bin.slice(1) + '0', temp)
+    }
+    const hexResult = binToHex(binResult)
+    
+    return hexResult;
+}
+
+export const addBin = (bin1: string, bin2: string) => {
+    let result = ''
+    let memory = 0
+    for (let i = bin1.length - 1; i >= 0; i--) {
+        const sum = parseInt(bin1[i]) + parseInt(bin2[i])
+        result = (sum % 2) + result
+        memory = Math.floor(sum / 2)
+    }
+    return result;
+}
+
+const mixMatrix = [
+    ['02', '03', '01', '01'],
+    ['01', '02', '03', '01'],
+    ['01', '01', '02', '03'],
+    ['03', '01', '01', '02']
+]
 export const mixColumns = (state: number[][]) => {
     const result = [[0, 0, 0, 0], [0, 0, 0, 0]]
     for (let i = 0; i < 4; i++) {
