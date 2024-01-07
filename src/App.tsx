@@ -18,6 +18,7 @@ import Elgamal from "./tabs/Elgaman"
 import MixColumns from "./tabs/MixColumns"
 import Xtime from "./tabs/Xtime"
 import Xor from "./tabs/Xor"
+import SquareRoot2OfModulo from "./tabs/SquareRoot2OfModulo"
 
 const App = () => {
   const [modeVisible, setModeVisible] = useState(false)
@@ -160,6 +161,13 @@ const App = () => {
           }
           {mode.value == 'xor' &&
             <Xor
+              onResult={(result) => {
+                setResult(result)
+              }}
+            />
+          }
+          {mode.value == 'sqrtOfMod' &&
+            <SquareRoot2OfModulo
               onResult={(result) => {
                 setResult(result)
               }}

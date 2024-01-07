@@ -70,6 +70,10 @@ const Mode = (props: IMode) => {
             label: 'Nhân xtime',
             value: 'xor'
         },
+        {
+            label: 'Tìm căn bậc 2',
+            value: 'sqrtOfMod'
+        }
     ]
 
     return (
