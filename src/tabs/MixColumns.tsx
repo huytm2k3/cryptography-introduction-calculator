@@ -18,10 +18,10 @@ const MixColumns = (props: MixColumnsProps) => {
     const [numN, setNumN] = useState('')
 
     const [columns, setColumns] = useState([
-        ['63', 'c9', 'fe', '30'],
-        ['f2', '63', '26', 'f2'],
-        ['7d', 'd4', 'c9', 'c9'],
-        ['d4', 'fa', '63', '82']
+        ['', '', '', ''],
+        ['', '', '', ''],
+        ['', '', '', ''],
+        ['', '', '', '']
     ])
 
     return (
